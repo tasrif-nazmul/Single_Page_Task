@@ -1,0 +1,321 @@
+﻿@model Single_Page_Task.Models.MeetingMinutesMaster
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@using (Html.BeginForm())
+{
+
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "")
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th colspan="4">
+                <div>
+                    @Html.Label("Meeting Minutes")
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <label>
+                        @Html.RadioButton("CustomerType", "Individual", new { @checked = "checked" }) Individual
+                    </label>
+                    <label>
+                        @Html.RadioButton("CustomerType", "Corporate") Corporate
+                    </label>
+                </div>
+
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <div>
+                    @Html.Label("Customer Name")
+                    <span style="color: red;">*</span>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.DropDownList("CustomerName", Enumerable.Empty<SelectListItem>(), "Select Customer Name", new { @class = "form-control", required = "required" })
+                </div>
+
+            </td>
+            <td>
+                @Html.Label("Meeting Agenda")
+                <span style="color: red;">*</span>
+            </td>
+            <td>  
+                <div>
+                    @*@Html.EditorFor(model => model.MeetingAgenda, new { htmlAttributes = new { @class = "form-control", placeholder = "Meeting agenda" } })*@
+                    @Html.TextAreaFor(model => model.MeetingAgenda, new { @class = "form-control", placeholder = "Meeting agenda", required = "required" })
+                    @Html.ValidationMessageFor(model => model.MeetingAgenda, "")
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.Label("Date")
+                <span style="color: red;">*</span>
+            </td>
+
+            <td>
+                <div>
+                    <input type="date" name="Date" value="Date" class="form-control" required = "required"/>
+                    @Html.ValidationMessageFor(model => model.Date, "")
+                </div>
+            </td>
+
+            <td>
+                @Html.Label("Time")
+                <span style="color: red;">*</span>
+            </td>
+            <td>
+                <div>
+                    <input type="time" name="Time" value="Time" class="form-control" required = "required"/>
+                    @Html.ValidationMessageFor(model => model.Time, "")
+                </div>
+            </td>
+
+            
+        </tr>
+
+        <tr>
+            <td>
+                @Html.Label("Meeting place")
+                <span style="color: red;">*</span>
+            </td>
+            <td>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.MeetingPlace, new { htmlAttributes = new { @class = "form-control", placeholder = "Meeting Place", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.MeetingPlace, "", new { @class = "text-danger" })
+                </div>
+            </td>
+
+
+            <td>
+                @Html.Label("Meeting Duscussion")
+                <span style="color: red;">*</span>
+            </td>
+            <td>
+                <div>
+                    @*@Html.EditorFor(model => model.MeetingDiscussion, new { htmlAttributes = new { @class = "form-control", placeholder = "Meeting discussion" } })*@
+                    @Html.TextAreaFor(model => model.MeetingDiscussion, new { @class = "form-control", placeholder = "Meeting discussion", required = "required" })
+                    @Html.ValidationMessageFor(model => model.MeetingDiscussion, "")
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.Label("Attends From Client Side")
+                <span style="color: red;">*</span>
+
+            </td>
+            <td>
+                <div>
+                    @*@Html.EditorFor(model => model.AttendsFromClientSide, new { htmlAttributes = new { @class = "form-control", placeholder = "Present client side" } })*@
+                    @Html.TextAreaFor(model => model.AttendsFromClientSide, new { @class = "form-control", placeholder = "Present client side", required = "required" })
+                    @Html.ValidationMessageFor(model => model.AttendsFromClientSide, "")
+                </div>
+            </td>
+
+            <td>
+                @Html.Label("Meeting Descision")
+                <span style="color: red;">*</span>
+            </td>
+            <td>
+                <div>
+                    @*@Html.EditorFor(model => model.MeetingDecision, new { htmlAttributes = new { @class = "form-control", placeholder = "Meeting decision" } })*@
+                    @Html.TextAreaFor(model => model.MeetingDecision, new { @class = "form-control", placeholder = "Meeting decision", required = "required" })
+                    @Html.ValidationMessageFor(model => model.MeetingDecision, "")
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                @Html.Label("Attends From Host Side")
+                <span style="color: red;">*</span>
+
+            </td>
+            <td>
+                <div>
+                    @*@Html.EditorFor(model => model.AttendsFromHostSide, new { htmlAttributes = new { @class = "form-control", placeholder = "Present self side" } })*@
+                    @Html.TextAreaFor(model => model.AttendsFromHostSide, new { @class = "form-control", placeholder = "Present self side", required = "required" })
+                    @Html.ValidationMessageFor(model => model.AttendsFromHostSide, "")
+                </div>
+            </td>   
+        </tr>
+     
+
+        @*second part start here*@
+
+        <tr>
+            <td>
+                @Html.Label("Interested product/service")
+            </td>
+            <td>
+                <div>
+                    @Html.DropDownList("ProductName", ViewBag.ProductNames as SelectList, "Interested product/service", new { @class="form-control",id = "PName" })
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.Label("Quantity")
+            </td>
+            <td>
+                <div>
+                    <input type="number" name="Quantity" class="form-control"/>
+                </div>
+            </td>
+
+            <td>
+                @Html.Label("Unit Name")
+            </td>
+            <td>
+                <div>
+                    <span id="UnitName" class=""></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div>
+                    <button type="button" id="addToList">Add</button>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <div>
+                    <table id="selectedDataTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Interested Product/Service Name</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+        </tr>
+
+        
+        <tr>
+            <td>
+                <div>
+                    <input type="submit" value="Save" />
+                </div>
+            </td>
+            <td>
+                <div>
+                    <input type="submit" value="Refresh" />
+                </div>
+            </td>
+        </tr>
+        
+
+        
+    </table>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("input[name='CustomerType']").change(function () {
+            var selectedType = $("input[name='CustomerType']:checked").val();
+
+            $.ajax({
+                url: '@Url.Action("GetCustomerNames", "Meeting")',
+                type: 'GET',
+                data: { customerType: selectedType },
+                success: function (data) {
+                    var dropdown = $("#CustomerName");
+                    dropdown.empty();
+                    dropdown.append('<option value="">Select Customer Name</option>');
+                    $.each(data, function (index, item) {
+                        dropdown.append($('<option></option>').text(item).val(item));
+                    });
+                }
+            });
+        });
+
+        $("#PName").change(function () {
+            var selectedProduct = $("#PName").val();
+
+            $.ajax({
+                url: '@Url.Action("LoadProductDetails", "Meeting")',
+                type: 'GET',
+                data: { productName: selectedProduct },
+                success: function (data) {
+                    $("#UnitName").text(data.Unit);
+                }
+            });
+        });
+
+        $("#addToList").click(function () {
+            var selectedProduct = $("#PName").val();
+            var quantity = $("input[name='Quantity']").val();
+            var unitName = $("#UnitName").text();
+
+            if (selectedProduct && quantity && unitName) {
+                var rowId = "row_" + Date.now();
+
+                var tableRow =
+                    "<tr id='" + rowId + "'>" +
+                    "<td class='product'>" + selectedProduct + "</td>" +
+                    "<td class='quantity'>" + quantity + "</td>" +
+                    "<td class='unitName'>" + unitName + "</td>" +
+                    "<td><button class='edit' data-row-id='" + rowId + "'>Edit</button></td>" +
+                    "<td><button class='delete' data-row-id='" + rowId + "'>Delete</button></td>" +
+                    "</tr>";
+
+                $("#selectedDataTable tbody").append(tableRow);
+
+                $("#PName").val("");
+                $("input[name='Quantity']").val("");
+                $("#UnitName").text("");
+            } else {
+                alert("Please select product, enter quantity, and wait for unit details.");
+            }
+        });
+
+        $(document).on("click", ".delete", function () {
+            var rowId = $(this).data("row-id");
+            $("#" + rowId).remove();
+        });
+
+        $(document).on("click", ".edit", function () {
+            var rowId = $(this).data("row-id");
+            var productCell = $("#" + rowId + " .product");
+            var quantityCell = $("#" + rowId + " .quantity");
+            var unitNameCell = $("#" + rowId + " .unitName");
+
+            $("#PName").val(productCell.text());
+            $("input[name='Quantity']").val(quantityCell.text());
+            $("#UnitName").text(unitNameCell.text());
+
+            $("#" + rowId).remove();
+        });
+    </script>
+}
+
+
+
